@@ -1,0 +1,30 @@
+services:
+  mongo:
+    image: mongo:7
+    ports:
+      - "27017:27017"
+  tiger:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: nightprep
+      POSTGRES_PASSWORD: nightprep
+      POSTGRES_DB: nightprep
+    ports:
+      - "5432:5432"
+  temporal-db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: temporal
+      POSTGRES_PASSWORD: temporal
+  temporal:
+    image: temporalio/auto-setup:1.25.2
+    depends_on:
+      - temporal-db
+    environment:
+      DB: postgres12
+      DB_PORT: 5432
+      POSTGRES_USER: temporal
+      POSTGRES_PWD: temporal
+      POSTGRES_SEEDS: temporal-db
+    ports:
+      - "7233:7233"
