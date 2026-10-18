@@ -1,15 +1,21 @@
 import type { Metadata } from "next";
+import { Atkinson_Hyperlegible } from "next/font/google";
 import "./globals.css";
+
+const sans = Atkinson_Hyperlegible({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+});
 
 export const metadata: Metadata = {
   title: "NightPrep",
-  description: "Tonight's prep sheet for an independent food truck.",
+  description: "A cook list, a sidewalk sign, and a spoken brief for tonight's food truck service.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className={sans.className}>{children}</body>
     </html>
   );
 }
